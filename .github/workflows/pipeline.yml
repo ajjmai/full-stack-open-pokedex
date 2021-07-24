@@ -33,3 +33,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: 'frozen-spire-87459'
           heroku_email: ${{secrets.HEROKU_EMAIL}}
+          healthcheck: 'https://frozen-spire-87459.herokuapp.com/health'
+          checkstring: 'ok'
