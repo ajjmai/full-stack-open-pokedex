@@ -2,8 +2,8 @@ name: Hello World!
 
 on:
   push:
-    braches:
-      - master
+    branches:
+      - main
 
 jobs:
   hello_wordl_job:
