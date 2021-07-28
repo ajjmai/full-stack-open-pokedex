@@ -15,5 +15,7 @@ jobs:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
       - name: contains skip
-        if: "!contains(join(github.event.commits.*.message), '#skip')"
-        run: echo no skip --> deploy
+        env:
+          COMMIT_MESSAGES: ${{ join(github.event.commits.*.message) }}
+        if: "!contains('$COMMIT_MESSAGES', '#skip')"
+        run: echo deploy
