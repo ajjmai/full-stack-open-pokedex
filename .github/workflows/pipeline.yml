@@ -32,9 +32,7 @@ jobs:
           wait-on: http://localhost:5000
       - name: deploy to heroku
         uses: akhileshns/heroku-deploy@v3.12.12
-        env:
-          COMMIT_MESSAGES: ${{ join(github.event.commits.*.message) }}
-        if: ${{ github.event_name == 'push' && !contains('$COMMIT_MESSAGES', '#skip') }}
+        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: 'frozen-spire-87459'
@@ -45,9 +43,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.33.0
-        if: ${{ github.event_name == 'push' && !contains('$COMMIT_MESSAGES', '#skip') }}
+        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         env:
-          COMMIT_MESSAGES: ${{ join(github.event.commits.*.message) }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
           RELEASE_BRANCHES: main
